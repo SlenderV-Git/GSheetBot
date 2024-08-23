@@ -1,12 +1,12 @@
 from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import Message
-from aiogram.enums import ChatType
-from app.database.services import check_id, add_id, delete_id, get_all
-from app.core.settings import get_settings
+from app.database.services import check_id, add_id, delete_id
+from app.filters.filters import IsPrivate
+from app.database.services import get_all
 
 rt = Router()
-rt.message.filter(F.chat.type == ChatType.PRIVATE and F.from_user.id in get_settings().ADMIN_IDS)
+rt.message.filter(IsPrivate())
 
 @rt.message(Command('add'))
 async def add_chat_id(message: Message):
