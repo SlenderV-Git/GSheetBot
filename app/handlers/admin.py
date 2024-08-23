@@ -1,8 +1,10 @@
-from aiogram import Router
+from aiogram import Router, F
 from aiogram.types import Message
 from aiogram.filters import Command, CommandStart
+from aiogram.enums import ChatType
 from gspread.worksheet import Worksheet
 from app.models.sheets_entry import Client
+from app.database.services import get_all
 from app.services.command_converter import (convert_to_client, 
                                             clear_command_prefix, 
                                             validate_command, 
@@ -13,7 +15,7 @@ from app.services.google_sheet import (get_day_result,
                                        change_last_cash)
 
 rt = Router()
-
+rt.message.filter(F.chat.type != ChatType.PRIVATE and F.from_user.id in [chat.chat_id for chat in get_all()])
 
 @rt.message(CommandStart())
 async def start(message: Message):

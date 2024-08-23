@@ -9,6 +9,8 @@ class Settings(BaseSettings):
     API_TOKEN : str
     GOOGLE_SHEET_ID : str
     CREDENTIALS_FILE : str
+    DATABASE_URL : str
+    ADMIN_IDS : list[int]
 
 def get_settings() -> Settings:
     return Settings()
